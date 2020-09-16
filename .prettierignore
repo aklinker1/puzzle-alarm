@@ -13,4 +13,10 @@
 .externalNativeBuild
 .cxx
 *.log
-/node_modules
+/app/build
+/app/libs
+/gradle
+node_modules
+
+# Temp
+*.kt
