@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         val alarm = Alarm(null, DateUtils.dateAt(6), true)
         lifecycleScope.launch {
             alarmListViewModel.createAlarm(alarm)
-            Log.d("alarms", alarm.toString())
+            Log.v("alarms", alarm.toString())
             AlarmScheduler.updateAlarm(this@MainActivity, alarm)
         }
     }

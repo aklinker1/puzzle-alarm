@@ -21,7 +21,7 @@ class AlarmViewHolder(private val clickHandler: AlarmListItemClickListener, view
     fun bind(alarm: Alarm, index: Int) {
         val timeFormatter = SimpleDateFormat("h:mm a", Locale.getDefault())
         name.text = alarm.name ?: "Alarm"
-        time.text = timeFormatter.format(alarm.time).toLowerCase(Locale.getDefault())
+        time.text = timeFormatter.format(alarm.time.time).toLowerCase(Locale.getDefault())
         toggle.isChecked = alarm.enabled
         time.alpha = if (!alarm.enabled) 0.6f else 1f
         repeats.text = alarm.repeatsText

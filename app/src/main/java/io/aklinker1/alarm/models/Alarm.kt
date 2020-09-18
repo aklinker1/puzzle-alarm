@@ -10,7 +10,7 @@ import kotlin.collections.ArrayList
 @Entity(tableName = "alarms")
 data class Alarm(
     @ColumnInfo var name: String?,
-    @ColumnInfo var time: Date,
+    @ColumnInfo var time: Calendar,
     @ColumnInfo var enabled: Boolean,
     @ColumnInfo(name = "repeat_sunday") var repeatSunday: Boolean = false,
     @ColumnInfo(name = "repeat_monday") var repeatMonday: Boolean = false,

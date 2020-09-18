@@ -5,12 +5,12 @@ import java.util.*
 
 class DateConverter {
     @TypeConverter
-    fun fromTimestamp(value: Long?): Date? {
-        return if (value == null) null else Date(value)
+    fun fromTimestamp(value: Long?): Calendar? {
+        return if (value == null) null else with(Calendar.getInstance()) { timeInMillis = value; this }
     }
 
     @TypeConverter
-    fun dateToTimestamp(value: Date?): Long? {
-        return value?.time
+    fun dateToTimestamp(value: Calendar?): Long? {
+        return value?.timeInMillis
     }
 }

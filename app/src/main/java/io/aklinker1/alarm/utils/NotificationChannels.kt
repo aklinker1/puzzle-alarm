@@ -28,16 +28,5 @@ object NotificationChannels {
                 }
             createNotificationChannel(channel)
         }
-
-        // Etc. Channel
-        // manager.apply {
-        //     val name = context.getString(R.string.notification_alarm_channel_name)
-        //     val description = context.getString(R.string.notification_alarm_channel_description)
-        //     val importance = NotificationManager.IMPORTANCE_DEFAULT
-        //     val channel = NotificationChannel("alarms", name, importance).apply {
-        //         setDescription(description)
-        //     }
-        //     createNotificationChannel(channel)
-        // }
     }
 }

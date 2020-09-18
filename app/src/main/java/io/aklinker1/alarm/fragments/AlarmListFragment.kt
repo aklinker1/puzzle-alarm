@@ -21,6 +21,7 @@ import io.aklinker1.alarm.utils.DateUtils
 import io.aklinker1.alarm.view_models.AlarmListViewModel
 import io.aklinker1.alarm.workers.AlarmScheduler
 import kotlinx.coroutines.launch
+import java.util.*
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -59,13 +60,12 @@ class AlarmListFragment : Fragment(), AlarmListItemClickListener {
 
     override fun onClickAlarm(index: Int) {
         val alarm = adapter.currentList[index]
-        Log.d("alarms", "Clicked: $alarm")
     }
 
     override fun onClickAlarmTime(index: Int) {
         val alarm = adapter.currentList[index]
-        val hour = alarm.time.hours
-        val minutes = alarm.time.minutes
+        val hour = alarm.time[Calendar.HOUR_OF_DAY]
+        val minutes = alarm.time[Calendar.MINUTE]
         TimePickerDialog(this.context, onSelectTimeForAlarm(alarm), hour, minutes, false).show()
     }
 

@@ -8,8 +8,8 @@
     <fragment
         android:id="@+id/FirstFragment"
         android:label="@string/first_fragment_label"
-        android:name="io.aklinker1.alarm.fragments.FirstFragment"
-        tools:layout="@layout/fragment_first">
+        android:name="io.aklinker1.alarm.fragments.ActiveAlarmFragment"
+        tools:layout="@layout/fragment_active_alarm">
 
         <action
             android:id="@+id/action_FirstFragment_to_Second2Fragment"
