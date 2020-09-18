@@ -48,7 +48,7 @@ class AlarmScheduler(applicationContext: Context, workerParams: WorkerParameters
                 val pendingIntent = createIntent(alarm)
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                     val alarmInfo = AlarmManager.AlarmClockInfo(
-                        Calendar.getInstance().timeInMillis + 10 * 1000,
+                        Calendar.getInstance().timeInMillis + 5 * 1000,
                         pendingIntent
                     )
                     alarmManager?.setAlarmClock(alarmInfo, pendingIntent)
