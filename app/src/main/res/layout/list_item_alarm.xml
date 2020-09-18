@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_margin="8dp"
+        app:cardCornerRadius="@dimen/card_corner_radius"
+        app:cardElevation="4dp"
+        app:cardBackgroundColor="@color/card_background"
+    >
+
+        <View
+            android:id="@+id/click"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?attr/selectableItemBackground"
+        />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+        >
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                tools:text="@sample/alarms.json/data/name"
+                android:textColor="@color/textColorSecondary"
+                style="@style/TextAppearance.MaterialComponents.Subtitle2"
+            />
+
+            <TextView
+                style="@style/TextAppearance.MaterialComponents.Headline4"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:id="@+id/time"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:textColor="?colorOnBackground"
+                app:layout_constraintRight_toLeftOf="@id/toggle"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/name"
+                tools:text="@sample/alarms.json/data/time"
+            />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/toggle"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                tools:checked="@sample/alarms.json/data/enabled"
+                app:layout_constraintTop_toTopOf="@id/time"
+                app:layout_constraintBottom_toBottomOf="@id/time"
+                app:layout_constraintRight_toRightOf="parent"
+            />
+
+            <TextView
+                android:id="@+id/repeats"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/time"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="@id/puzzles"
+                tools:text="@sample/alarms.json/data/repeats"
+            />
+
+            <TextView
+                android:id="@+id/puzzles"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/time"
+                app:layout_constraintRight_toRightOf="parent"
+                tools:text="@sample/alarms.json/data/puzzles"
+            />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</FrameLayout>

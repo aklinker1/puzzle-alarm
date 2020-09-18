@@ -1,0 +1,25 @@
+{
+    "data": [
+        {
+            "name": "Weekdays",
+            "time": "6:00 am",
+            "enabled": true,
+            "repeats": "Mon, Tue, Wed, Thu, Fri",
+            "puzzles": "3 puzzles"
+        },
+        {
+            "name": "Weekends",
+            "time": "8:00 am",
+            "enabled": false,
+            "repeats": "Sun, Sat",
+            "puzzles": "3 puzzles"
+        },
+        {
+            "name": "Alarm",
+            "time": "7:45 am",
+            "enabled": true,
+            "repeats": " ",
+            "puzzles": "1 puzzle"
+        }
+    ]
+}

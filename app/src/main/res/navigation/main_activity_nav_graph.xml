@@ -9,9 +9,9 @@
 
     <fragment
         android:id="@+id/FirstFragment"
-        android:name="io.aklinker1.alarm.fragments.FirstFragment"
+        android:name="io.aklinker1.alarm.fragments.AlarmListFragment"
         android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first"
+        tools:layout="@layout/fragment_alarm_list"
     >
         <action
             android:id="@+id/action_FirstFragment_to_SecondFragment"
