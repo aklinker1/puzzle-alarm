@@ -1,10 +1,12 @@
 package io.aklinker1.alarm.fragments
 
+import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.FrameLayout
 import androidx.appcompat.widget.Toolbar
@@ -17,6 +19,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import io.aklinker1.alarm.R
 import io.aklinker1.alarm.models.Alarm
+import io.aklinker1.alarm.utils.KeyboardUtils
 import io.aklinker1.alarm.utils.TimeFormatter
 import io.aklinker1.alarm.view_models.EditAlarmViewModel
 import kotlinx.coroutines.launch
@@ -63,7 +66,9 @@ class EditAlarmFragment : Fragment() {
 
         viewModel.alarm.observe(requireActivity(), {
             alarmTime.title = TimeFormatter.alarmTime(it.time)
+
             alarmName.setText(it.name ?: "Untitled Alarm")
+            alarmName.setTypeface(null, if (it.name == null) Typeface.ITALIC else Typeface.NORMAL)
 
             sunday.isSelected = it.repeatSunday
             monday.isSelected = it.repeatMonday
@@ -75,29 +80,47 @@ class EditAlarmFragment : Fragment() {
         })
 
         sunday.setOnClickListener {
-            updateAlarmWeekdays(viewModel.alarm.value?.copy(repeatSunday = !it.isSelected))
+            saveAlarmHelper(viewModel.alarm.value?.copy(repeatSunday = !it.isSelected))
         }
         monday.setOnClickListener {
-            updateAlarmWeekdays(viewModel.alarm.value?.copy(repeatMonday = !it.isSelected))
+            saveAlarmHelper(viewModel.alarm.value?.copy(repeatMonday = !it.isSelected))
         }
         tuesday.setOnClickListener {
-            updateAlarmWeekdays(viewModel.alarm.value?.copy(repeatTuesday = !it.isSelected))
+            saveAlarmHelper(viewModel.alarm.value?.copy(repeatTuesday = !it.isSelected))
         }
         wednesday.setOnClickListener {
-            updateAlarmWeekdays(viewModel.alarm.value?.copy(repeatWednesday = !it.isSelected))
+            saveAlarmHelper(viewModel.alarm.value?.copy(repeatWednesday = !it.isSelected))
         }
         thursday.setOnClickListener {
-            updateAlarmWeekdays(viewModel.alarm.value?.copy(repeatThursday = !it.isSelected))
+            saveAlarmHelper(viewModel.alarm.value?.copy(repeatThursday = !it.isSelected))
         }
         friday.setOnClickListener {
-            updateAlarmWeekdays(viewModel.alarm.value?.copy(repeatFriday = !it.isSelected))
+            saveAlarmHelper(viewModel.alarm.value?.copy(repeatFriday = !it.isSelected))
         }
         saturday.setOnClickListener {
-            updateAlarmWeekdays(viewModel.alarm.value?.copy(repeatSaturday = !it.isSelected))
+            saveAlarmHelper(viewModel.alarm.value?.copy(repeatSaturday = !it.isSelected))
         }
+
+        alarmName.setSelectAllOnFocus(true)
+        alarmName.setOnEditorActionListener { input, actionId, _ ->
+            return@setOnEditorActionListener when (actionId) {
+                EditorInfo.IME_ACTION_DONE -> {
+                    var newName = input.text.toString().trim().run {
+                        if (this == "") return@run null
+                        if (this == "Untitled Alarm" && viewModel.alarm.value?.name == null) return@run null
+                        this
+                    }
+                    saveAlarmHelper(viewModel.alarm.value?.copy(name = newName))
+                    alarmName.isCursorVisible = false
+                    false // hide keyboard
+                }
+                else -> false
+            }
+        }
+        alarmName.setOnClickListener { alarmName.isCursorVisible = true }
     }
 
-    private fun updateAlarmWeekdays(newAlarm: Alarm?) {
+    private fun saveAlarmHelper(newAlarm: Alarm?) {
         val alarm = newAlarm ?: return
 
         this.lifecycleScope.launch {

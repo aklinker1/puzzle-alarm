@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:fitsSystemWindows="true"
@@ -45,6 +46,10 @@
                     android:paddingRight="0dp"
                     android:textStyle="italic"
                     android:background="@android:color/transparent"
+                    android:inputType="text"
+                    android:imeOptions="actionDone"
+                    android:maxLines="1"
+                    android:cursorVisible="false"
                     style="@style/TextAppearance.AppCompat.Title"
                     android:textColor="@color/textColorSecondary"
                     tools:text="Alarm Name"/>
