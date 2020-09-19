@@ -1,6 +1,5 @@
 package io.aklinker1.alarm.models
 
-import android.util.Log
 import androidx.recyclerview.widget.DiffUtil
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -15,6 +14,7 @@ data class Alarm(
     @ColumnInfo var name: String?,
     @ColumnInfo var time: AlarmTime,
     @ColumnInfo var enabled: Boolean,
+
     @ColumnInfo(name = "repeat_sunday") var repeatSunday: Boolean = false,
     @ColumnInfo(name = "repeat_monday") var repeatMonday: Boolean = false,
     @ColumnInfo(name = "repeat_tuesday") var repeatTuesday: Boolean = false,
@@ -23,21 +23,9 @@ data class Alarm(
     @ColumnInfo(name = "repeat_friday") var repeatFriday: Boolean = false,
     @ColumnInfo(name = "repeat_saturday") var repeatSaturday: Boolean = false,
     @ColumnInfo(name = "created_at") var createdAt: Calendar = Calendar.getInstance(),
+
     @ColumnInfo @PrimaryKey(autoGenerate = true) var id: Long = 0L
-
 ) : Serializable {
-
-    companion object {
-        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Alarm>() {
-            override fun areItemsTheSame(oldItem: Alarm, newItem: Alarm): Boolean {
-                return oldItem.id == newItem.id
-            }
-
-            override fun areContentsTheSame(oldItem: Alarm, newItem: Alarm): Boolean {
-                return oldItem == newItem
-            }
-        }
-    }
 
     val repeatsText: String
         get(): String {
@@ -86,7 +74,8 @@ data class Alarm(
 
     private fun getNextRepeatedOccurrence(now: Calendar): Pair<Calendar, Alarm>? {
         for (i in 0..6) {
-            val dayOfWeek = (now[Calendar.DAY_OF_WEEK] - 1 + i) % 7 // Calendar.DAY_OF_WEEK returns 1-7, not 0-6
+            val dayOfWeek =
+                (now[Calendar.DAY_OF_WEEK] - 1 + i) % 7 // Calendar.DAY_OF_WEEK returns 1-7, not 0-6
             if (isRepeatedFor(dayOfWeek)) {
                 val scheduledAt = now.clone() as Calendar
                 scheduledAt.add(Calendar.DATE, i)
@@ -105,6 +94,6 @@ data class Alarm(
     }
 
     override fun toString(): String {
-        return "Alarm(name='$name', id=$id, time=${time.first}:${if(time.second < 10) "0" + time.second else time.second}, repeats=$repeatsText)"
+        return "Alarm(name='$name', id=$id, time=${time.first}:${if (time.second < 10) "0" + time.second else time.second}, repeats=$repeatsText)"
     }
 }

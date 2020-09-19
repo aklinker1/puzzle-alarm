@@ -6,9 +6,10 @@ import androidx.recyclerview.widget.ListAdapter
 import io.aklinker1.alarm.R
 import io.aklinker1.alarm.adapters.view_holders.AlarmViewHolder
 import io.aklinker1.alarm.models.Alarm
+import io.aklinker1.alarm.models.AlarmWithPuzzleCount
 
 class AlarmListAdapter(private val clickHandler: AlarmListItemClickListener) :
-    ListAdapter<Alarm, AlarmViewHolder>(Alarm.DIFF_CALLBACK) {
+    ListAdapter<AlarmWithPuzzleCount, AlarmViewHolder>(AlarmWithPuzzleCount.DIFF_CALLBACK) {
     override fun onBindViewHolder(holder: AlarmViewHolder, position: Int) {
         holder.bind(getItem(position))
     }

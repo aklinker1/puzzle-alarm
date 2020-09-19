@@ -1,5 +1,6 @@
 package io.aklinker1.alarm.adapters.view_holders
 
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.widget.SwitchCompat
@@ -7,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import io.aklinker1.alarm.R
 import io.aklinker1.alarm.adapters.AlarmListItemClickListener
 import io.aklinker1.alarm.models.Alarm
+import io.aklinker1.alarm.models.AlarmWithPuzzleCount
 import io.aklinker1.alarm.utils.TimeFormatter
 
 class AlarmViewHolder(private val clickHandler: AlarmListItemClickListener, view: View) :
@@ -19,13 +21,16 @@ class AlarmViewHolder(private val clickHandler: AlarmListItemClickListener, view
     private val repeats: TextView = view.findViewById(R.id.repeats)
     private val toggle: SwitchCompat = view.findViewById(R.id.toggle)
 
-    fun bind(alarm: Alarm) {
+    fun bind(alarmWithPuzzleCount: AlarmWithPuzzleCount) {
         // Remove any listeners so that it doesn't get double called
         toggle.setOnCheckedChangeListener(null)
+        val alarm = alarmWithPuzzleCount.alarm
+        val puzzleCount = alarmWithPuzzleCount.puzzleCount
+        Log.v("alarms", "puzzles: $puzzleCount")
 
         name.text = alarm.name ?: "Alarm"
         time.text = TimeFormatter.alarmTime(alarm.time)
-        repeats.text = alarm.repeatsText
+        repeats.text = "${alarm.repeatsText} • $puzzleCount Puzzles"
 
         toggle.isChecked = alarm.enabled
         card.isSelected = alarm.enabled

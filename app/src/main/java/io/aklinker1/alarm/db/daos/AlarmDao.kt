@@ -3,13 +3,14 @@ package io.aklinker1.alarm.db.daos
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import io.aklinker1.alarm.models.Alarm
+import io.aklinker1.alarm.models.AlarmWithPuzzleCount
 
 @Dao
 interface AlarmDao {
-    @Query("SELECT * FROM alarms ORDER BY time ASC")
-    fun getAll(): LiveData<List<Alarm>>
+    @Query("SELECT alarms.*, puzzles.id as puzzle_id, count(puzzles.id) as puzzle_count FROM alarms LEFT JOIN puzzles ON puzzles.alarm_id=alarms.id GROUP BY alarms.id ORDER BY alarms.time ASC")
+    fun getAll(): LiveData<List<AlarmWithPuzzleCount>>
 
-    @Query("SELECT * FROM alarms ORDER BY time ASC")
+    @Query("SELECT *FROM alarms ORDER BY time ASC")
     fun getAllSync(): List<Alarm>
 
     @Query("SELECT * FROM alarms WHERE id=:alarmId")
