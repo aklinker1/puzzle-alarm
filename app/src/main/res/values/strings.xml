@@ -11,5 +11,7 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="title_activity_alarm">Alarm!</string>
     <string name="notification_alarm_channel_name">Alarms</string>
-    <string name="notification_alarm_channel_description">The notifications associated with when alarms go off</string>
+    <string
+        name="notification_alarm_channel_description"
+    >The notifications associated with when alarms go off</string>
 </resources>

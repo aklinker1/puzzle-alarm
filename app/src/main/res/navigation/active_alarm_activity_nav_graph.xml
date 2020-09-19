@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/active_alarm_activity_nav_graph"
+    app:startDestination="@id/active_alarm_fragment">
+
+    <argument
+        android:name="alarmId"
+        app:argType="long"
+        app:nullable="false" />
+
+    <fragment
+        android:id="@+id/active_alarm_fragment"
+        android:label="ActiveAlarmFragment"
+        android:name="io.aklinker1.alarm.fragments.ActiveAlarmFragment"
+        tools:layout="@layout/fragment_active_alarm">
+        <action
+            android:id="@+id/action_activeAlarmFragment_to_placeholder"
+            app:destination="@id/puzzle_solver_fragment"/>
+    </fragment>
+
+    <fragment android:id="@+id/puzzle_solver_fragment" />
+
+</navigation>

@@ -10,7 +10,13 @@ interface AlarmDao {
     fun getAll(): LiveData<List<Alarm>>
 
     @Query("SELECT * FROM alarms WHERE id=:alarmId")
-    fun get(alarmId: Long): Alarm
+    suspend fun get(alarmId: Long): Alarm
+
+    @Query("SELECT * FROM alarms WHERE id=:alarmId")
+    fun getLive(alarmId: Long): LiveData<Alarm>
+
+    @Query("SELECT * FROM alarms WHERE id=:alarmId")
+    fun getSync(alarmId: Long): Alarm
 
     @Insert
     suspend fun insert(alarm: Alarm): Long

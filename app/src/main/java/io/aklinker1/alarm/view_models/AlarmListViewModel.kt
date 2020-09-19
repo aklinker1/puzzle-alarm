@@ -11,6 +11,10 @@ class AlarmListViewModel(application: Application) : AndroidViewModel(applicatio
     private val alarmRepository = AlarmRepository(database)
     val alarms = alarmRepository.alarmList
 
+    suspend fun getAlarm(id: Long): Alarm {
+        return alarmRepository.get(id);
+    }
+
     suspend fun createAlarm(alarm: Alarm) {
         alarmRepository.create(alarm)
     }

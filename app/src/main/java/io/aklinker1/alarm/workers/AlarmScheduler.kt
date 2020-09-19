@@ -3,11 +3,8 @@ package io.aklinker1.alarm.workers
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
 import android.util.Log
-import androidx.core.app.TaskStackBuilder
 import androidx.work.*
-import io.aklinker1.alarm.activities.AlarmActivity
 import io.aklinker1.alarm.db.AppDatabase
 import io.aklinker1.alarm.models.Alarm
 import java.util.*
@@ -42,10 +39,10 @@ class AlarmScheduler(applicationContext: Context, workerParams: WorkerParameters
         }
 
         try {
-            val alarm = alarmDao.get(alarmId)
+            val alarm = alarmDao.getSync(alarmId)
             cancelAlarm(alarm)
             if (alarm.enabled) {
-                val pendingIntent = createIntent(alarm)
+                val pendingIntent = createPendingBroadcastIntent(alarm)
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                     val alarmInfo = AlarmManager.AlarmClockInfo(
                         Calendar.getInstance().timeInMillis + 5 * 1000,
@@ -63,20 +60,17 @@ class AlarmScheduler(applicationContext: Context, workerParams: WorkerParameters
         return Result.success()
     }
 
-    private fun createIntent(alarm: Alarm): PendingIntent {
-        val intent = Intent(applicationContext, AlarmBroadcastReceiver::class.java)
-        intent.action = "io.aklinker1.alarm.alarm_broadcast"
-        intent.putExtra("alarm", alarm.id)
+    private fun createPendingBroadcastIntent(alarm: Alarm): PendingIntent {
         return PendingIntent.getBroadcast(
             applicationContext,
             alarm.id.hashCode(),
-            intent,
+            AlarmBroadcastReceiver.createIntent(applicationContext, alarm.id),
             0
         )
     }
 
     private fun cancelAlarm(alarm: Alarm) {
-        alarmManager?.cancel(createIntent(alarm))
+        alarmManager?.cancel(createPendingBroadcastIntent(alarm))
         Log.v("alarms", "AlarmScheduler canceled alarm for $alarm")
     }
 }

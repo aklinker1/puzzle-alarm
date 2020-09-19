@@ -10,7 +10,7 @@ import io.aklinker1.alarm.models.Alarm
 class AlarmListAdapter(private val clickHandler: AlarmListItemClickListener) :
     ListAdapter<Alarm, AlarmViewHolder>(Alarm.DIFF_CALLBACK) {
     override fun onBindViewHolder(holder: AlarmViewHolder, position: Int) {
-        holder.bind(getItem(position), position)
+        holder.bind(getItem(position))
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlarmViewHolder {

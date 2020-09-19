@@ -4,6 +4,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.Serializable
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -20,7 +21,7 @@ data class Alarm(
     @ColumnInfo(name = "repeat_friday") var repeatFriday: Boolean = false,
     @ColumnInfo(name = "repeat_saturday") var repeatSaturday: Boolean = false,
     @ColumnInfo @PrimaryKey(autoGenerate = true) var id: Long = 0L
-) {
+) : Serializable {
     val repeatsText: String
         get (): String {
             val list = ArrayList<String>(7)
@@ -31,6 +32,10 @@ data class Alarm(
             if (repeatThursday) list.add("Thu")
             if (repeatFriday) list.add("Fri")
             if (repeatSaturday) list.add("Sat")
+
+            if (list.size == 7) return "Everyday"
+            if (list.size == 2 && repeatSunday && repeatSaturday) return "Weekend"
+            if (list.size == 5 && !repeatSunday && !repeatSaturday) return "Weekdays"
 
             return if (list.size == 0) "Not Repeated" else list.joinToString()
         }

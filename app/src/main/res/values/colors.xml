@@ -3,7 +3,9 @@
     <color name="colorPrimary">#90CAF9</color>
     <color name="colorPrimaryDark">#1976D2</color>
     <color name="colorAccent">#A5D6A7</color>
+    <color name="colorAccentDark">#388E3C</color>
     <color name="appBar">#303030</color>
     <color name="textColorSecondary">#99FFFFFF</color>
-    <color name="card_background">#2A2A2A</color>
+    <color name="cardBackground">#2A2A2A</color>
+    <color name="divider">#1FFFFFFF</color>
 </resources>

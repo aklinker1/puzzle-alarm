@@ -8,6 +8,7 @@
 >
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="true"
@@ -15,7 +16,7 @@
         android:layout_margin="8dp"
         app:cardCornerRadius="@dimen/card_corner_radius"
         app:cardElevation="4dp"
-        app:cardBackgroundColor="@color/card_background"
+        app:cardBackgroundColor="@color/bg_alarm_card"
     >
 
         <View
@@ -26,10 +27,12 @@
         />
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/border"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="16dp"
+            android:background="@drawable/bg_alarm_card"
         >
 
             <TextView
@@ -39,7 +42,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 tools:text="@sample/alarms.json/data/name"
-                android:textColor="@color/textColorSecondary"
+                android:textColor="@color/text_alarm_list_item_name"
                 style="@style/TextAppearance.MaterialComponents.Subtitle2"
             />
 
@@ -51,7 +54,7 @@
                 android:id="@+id/time"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:textColor="?colorOnBackground"
+                android:textColor="@color/text_alarm_list_item_time"
                 app:layout_constraintRight_toLeftOf="@id/toggle"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/name"
@@ -62,6 +65,7 @@
                 android:id="@+id/toggle"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
+                android:theme="@style/AppTheme.Reversed"
                 tools:checked="@sample/alarms.json/data/enabled"
                 app:layout_constraintTop_toTopOf="@id/time"
                 app:layout_constraintBottom_toBottomOf="@id/time"
