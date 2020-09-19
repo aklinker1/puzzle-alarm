@@ -6,8 +6,8 @@ import io.aklinker1.alarm.db.AppDatabase
 import io.aklinker1.alarm.db.repositories.AlarmRepository
 import io.aklinker1.alarm.models.Alarm
 
-class AlarmListViewModel(application: Application) : AndroidViewModel(application) {
-    private val database = AppDatabase.getInstance(application)
+class AlarmListViewModel(val app: Application) : AndroidViewModel(app) {
+    private val database = AppDatabase.getInstance(app)
     private val alarmRepository = AlarmRepository(database)
     val alarms = alarmRepository.alarmList
 
@@ -21,5 +21,9 @@ class AlarmListViewModel(application: Application) : AndroidViewModel(applicatio
 
     suspend fun updateAlarm(alarm: Alarm) {
         alarmRepository.update(alarm)
+    }
+
+    suspend fun deleteAlarm(alarm: Alarm) {
+        alarmRepository.delete(alarm)
     }
 }

@@ -129,6 +129,11 @@ class EditAlarmFragment : Fragment() {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel.alarm.removeObservers(requireActivity())
+    }
+
     private fun saveAlarmHelper(newAlarm: Alarm?) {
         val alarm = newAlarm ?: return
 

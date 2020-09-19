@@ -26,6 +26,10 @@ class AlarmRepository(database: AppDatabase) {
     }
 
     suspend fun update(alarm: Alarm) {
-            alarmDao.update(alarm)
+        alarmDao.update(alarm)
+    }
+
+    suspend fun delete(alarm: Alarm) {
+        alarmDao.delete(alarm)
     }
 }

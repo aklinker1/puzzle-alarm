@@ -26,4 +26,5 @@ class EditAlarmViewModel(application: Application, alarm: Alarm) : AndroidViewMo
     suspend fun updateAlarm(alarm: Alarm) {
         alarmRepository.update(alarm)
     }
+
 }

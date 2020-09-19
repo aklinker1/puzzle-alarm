@@ -40,6 +40,10 @@ class AlarmViewHolder(private val clickHandler: AlarmListItemClickListener, view
         click.setOnClickListener {
             clickHandler.onClickAlarm(alarm.id)
         }
+        click.setOnLongClickListener {
+            clickHandler.onLongClickAlarm(alarm.id)
+            true
+        }
         time.setOnClickListener {
             clickHandler.onClickAlarmTime(alarm.id)
         }

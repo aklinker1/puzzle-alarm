@@ -68,6 +68,14 @@ class AlarmListFragment : Fragment(), AlarmListItemClickListener {
         }
     }
 
+    override fun onLongClickAlarm(alarmId: Long) {
+        lifecycleScope.launch {
+            val alarm = alarmListViewModel.getAlarm(alarmId)
+            alarmListViewModel.deleteAlarm(alarm)
+            AlarmScheduler.updateSchedule(requireContext())
+        }
+    }
+
     override fun onClickAlarmTime(alarmId: Long) {
         lifecycleScope.launch {
             val alarm = alarmListViewModel.getAlarm(alarmId)
