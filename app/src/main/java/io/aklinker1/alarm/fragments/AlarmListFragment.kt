@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,6 +17,9 @@ import io.aklinker1.alarm.R
 import io.aklinker1.alarm.adapters.AlarmListAdapter
 import io.aklinker1.alarm.adapters.AlarmListItemClickListener
 import io.aklinker1.alarm.models.Alarm
+import io.aklinker1.alarm.models.AlarmTime
+import io.aklinker1.alarm.models.hours
+import io.aklinker1.alarm.models.minutes
 import io.aklinker1.alarm.utils.DateUtils
 import io.aklinker1.alarm.view_models.AlarmListViewModel
 import io.aklinker1.alarm.workers.AlarmScheduler
@@ -69,13 +71,12 @@ class AlarmListFragment : Fragment(), AlarmListItemClickListener {
     override fun onClickAlarmTime(alarmId: Long) {
         lifecycleScope.launch {
             val alarm = alarmListViewModel.getAlarm(alarmId)
-            val hour = alarm.time[Calendar.HOUR_OF_DAY]
-            val minutes = alarm.time[Calendar.MINUTE]
+            Log.v("alarms", "Clicked time for $alarm")
             TimePickerDialog(
                 this@AlarmListFragment.context,
                 onSelectTimeForAlarm(alarm),
-                hour,
-                minutes,
+                alarm.time.hours,
+                alarm.time.minutes,
                 false
             ).show()
         }
@@ -84,29 +85,30 @@ class AlarmListFragment : Fragment(), AlarmListItemClickListener {
     private fun onSelectTimeForAlarm(alarm: Alarm): TimePickerDialog.OnTimeSetListener {
         return TimePickerDialog.OnTimeSetListener { _, hours, minutes ->
             Log.v("alarms", "Updating $alarm to $hours:$minutes")
-            val newAlarm = alarm.copy(time = DateUtils.dateAt(hours, minutes))
+            val newAlarm = alarm.copy(time = AlarmTime(hours, minutes))
             this.lifecycleScope.launch {
-                AlarmScheduler.updateAlarm(requireContext(), newAlarm)
+                AlarmScheduler.updateSchedule(requireContext())
                 alarmListViewModel.updateAlarm(newAlarm)
             }
         }
     }
 
     override fun onToggleAlarm(alarmId: Long, newIsChecked: Boolean) {
+        Log.d("alarms", "toggled alarmId=$alarmId")
         this.lifecycleScope.launch {
             val alarm = alarmListViewModel.getAlarm(alarmId)
             val newAlarm = alarm.copy(enabled = newIsChecked)
             alarmListViewModel.updateAlarm(newAlarm)
-            AlarmScheduler.updateAlarm(requireContext(), alarm)
+            AlarmScheduler.updateSchedule(requireContext())
         }
     }
 
     private val onClickFab = fun(_: View) {
-        val alarm = Alarm(null, DateUtils.dateAt(6), true)
+        val alarm = Alarm(null, AlarmTime(6, 0), true)
         lifecycleScope.launch {
             alarmListViewModel.createAlarm(alarm)
             Log.v("alarms", alarm.toString())
-            AlarmScheduler.updateAlarm(requireContext(), alarm)
+            AlarmScheduler.updateSchedule(requireContext())
         }
     }
 }

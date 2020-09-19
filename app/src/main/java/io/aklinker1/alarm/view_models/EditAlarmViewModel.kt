@@ -13,6 +13,7 @@ class EditAlarmViewModel(application: Application, alarm: Alarm) : AndroidViewMo
 
     class Factory(private val application: Application, private val alarm: Alarm) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+            @Suppress("UNCHECKED_CAST")
             return EditAlarmViewModel(application, alarm) as T
         }
     }

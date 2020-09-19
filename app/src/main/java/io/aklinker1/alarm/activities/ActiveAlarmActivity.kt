@@ -11,6 +11,7 @@ import io.aklinker1.alarm.R
 import io.aklinker1.alarm.models.Alarm
 import io.aklinker1.alarm.utils.turnScreenOffAndKeyguardOn
 import io.aklinker1.alarm.utils.turnScreenOnAndKeyguardOff
+import io.aklinker1.alarm.workers.AlarmScheduler
 
 class ActiveAlarmActivity : AppCompatActivity() {
 
@@ -35,5 +36,6 @@ class ActiveAlarmActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         turnScreenOffAndKeyguardOn()
+        AlarmScheduler.updateSchedule(this)
     }
 }

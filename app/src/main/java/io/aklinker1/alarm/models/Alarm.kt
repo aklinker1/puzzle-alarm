@@ -1,9 +1,11 @@
 package io.aklinker1.alarm.models
 
+import android.util.Log
 import androidx.recyclerview.widget.DiffUtil
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import io.aklinker1.alarm.utils.DateUtils
 import java.io.Serializable
 import java.util.*
 import kotlin.collections.ArrayList
@@ -11,7 +13,7 @@ import kotlin.collections.ArrayList
 @Entity(tableName = "alarms")
 data class Alarm(
     @ColumnInfo var name: String?,
-    @ColumnInfo var time: Calendar,
+    @ColumnInfo var time: AlarmTime,
     @ColumnInfo var enabled: Boolean,
     @ColumnInfo(name = "repeat_sunday") var repeatSunday: Boolean = false,
     @ColumnInfo(name = "repeat_monday") var repeatMonday: Boolean = false,
@@ -20,10 +22,25 @@ data class Alarm(
     @ColumnInfo(name = "repeat_thursday") var repeatThursday: Boolean = false,
     @ColumnInfo(name = "repeat_friday") var repeatFriday: Boolean = false,
     @ColumnInfo(name = "repeat_saturday") var repeatSaturday: Boolean = false,
+    @ColumnInfo(name = "created_at") var createdAt: Calendar = Calendar.getInstance(),
     @ColumnInfo @PrimaryKey(autoGenerate = true) var id: Long = 0L
+
 ) : Serializable {
+
+    companion object {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Alarm>() {
+            override fun areItemsTheSame(oldItem: Alarm, newItem: Alarm): Boolean {
+                return oldItem.id == newItem.id
+            }
+
+            override fun areContentsTheSame(oldItem: Alarm, newItem: Alarm): Boolean {
+                return oldItem == newItem
+            }
+        }
+    }
+
     val repeatsText: String
-        get (): String {
+        get(): String {
             val list = ArrayList<String>(7)
             if (repeatSunday) list.add("Sun")
             if (repeatMonday) list.add("Mon")
@@ -39,20 +56,55 @@ data class Alarm(
 
             return if (list.size == 0) "Not Repeated" else list.joinToString()
         }
+    val isRepeated: Boolean
+        get() = repeatSunday || repeatMonday || repeatTuesday || repeatWednesday || repeatThursday || repeatFriday || repeatSaturday
 
-    companion object {
-        val DIFF_CALLBACK= object : DiffUtil.ItemCallback<Alarm>() {
-            override fun areItemsTheSame(oldItem: Alarm, newItem: Alarm): Boolean {
-                return oldItem.id == newItem.id
-            }
+    fun isRepeatedFor(dayOfWeek: Int): Boolean = when (dayOfWeek) {
+        0 -> repeatSunday
+        1 -> repeatMonday
+        2 -> repeatTuesday
+        3 -> repeatWednesday
+        4 -> repeatThursday
+        5 -> repeatFriday
+        6 -> repeatSaturday
+        else -> false
+    }
 
-            override fun areContentsTheSame(oldItem: Alarm, newItem: Alarm): Boolean {
-                return oldItem == newItem
+    fun getNextOccurrence(base: Calendar?): Pair<Calendar, Alarm>? {
+        if (!enabled) return null
+        val now = base ?: Calendar.getInstance()
+
+        if (isRepeated) return getNextRepeatedOccurrence(now)
+
+        val today = DateUtils.dateAt(hours = time.first, minutes = time.second, base = now)
+        if (today.timeInMillis > now.timeInMillis) return Pair(today, this)
+
+        val tomorrow = today.clone() as Calendar
+        tomorrow.add(Calendar.DATE, 1)
+        return Pair(tomorrow, this)
+    }
+
+    private fun getNextRepeatedOccurrence(now: Calendar): Pair<Calendar, Alarm>? {
+        for (i in 0..6) {
+            val dayOfWeek = (now[Calendar.DAY_OF_WEEK] - 1 + i) % 7 // Calendar.DAY_OF_WEEK returns 1-7, not 0-6
+            if (isRepeatedFor(dayOfWeek)) {
+                val scheduledAt = now.clone() as Calendar
+                scheduledAt.add(Calendar.DATE, i)
+                if (scheduledAt.timeInMillis > now.timeInMillis) {
+                    return Pair(
+                        DateUtils.createAlarmDate(
+                            scheduledAt,
+                            hours = time.first,
+                            minutes = time.second
+                        ), this
+                    )
+                }
             }
         }
+        return null
     }
 
     override fun toString(): String {
-        return "$name (id=$id)"
+        return "Alarm(name='$name', id=$id, time=${time.first}:${if(time.second < 10) "0" + time.second else time.second}, repeats=$repeatsText)"
     }
 }

@@ -20,6 +20,9 @@ class AlarmViewHolder(private val clickHandler: AlarmListItemClickListener, view
     private val toggle: SwitchCompat = view.findViewById(R.id.toggle)
 
     fun bind(alarm: Alarm) {
+        // Remove any listeners so that it doesn't get double called
+        toggle.setOnCheckedChangeListener(null)
+
         name.text = alarm.name ?: "Alarm"
         time.text = TimeFormatter.alarmTime(alarm.time)
         repeats.text = alarm.repeatsText
@@ -27,7 +30,7 @@ class AlarmViewHolder(private val clickHandler: AlarmListItemClickListener, view
         toggle.isChecked = alarm.enabled
         card.isSelected = alarm.enabled
         border.isSelected = alarm.enabled
-        time.alpha = if (alarm.enabled) 1f else 0.64f
+        time.isSelected = alarm.enabled
 
         click.setOnClickListener {
             clickHandler.onClickAlarm(alarm.id)
