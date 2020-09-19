@@ -54,6 +54,18 @@
                     android:textColor="@color/textColorSecondary"
                     tools:text="Alarm Name"/>
 
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/alarm_enabled"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|end"
+                    tools:checked="true"
+                    android:theme="@style/AppTheme.Reversed"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginStart="0dp"/>
+
             </FrameLayout>
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>

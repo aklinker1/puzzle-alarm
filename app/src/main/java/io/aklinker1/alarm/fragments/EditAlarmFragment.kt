@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.FrameLayout
+import androidx.appcompat.widget.SwitchCompat
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -31,8 +32,9 @@ class EditAlarmFragment : Fragment() {
         EditAlarmViewModel.Factory(requireActivity().application, args.alarm)
     }
 
-    private lateinit var alarmTime: Toolbar
     private lateinit var alarmName: EditText
+    private lateinit var alarmTime: Toolbar
+    private lateinit var alarmEnabled: SwitchCompat
     private lateinit var sunday: FrameLayout
     private lateinit var monday: FrameLayout
     private lateinit var tuesday: FrameLayout
@@ -52,8 +54,9 @@ class EditAlarmFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val navController = findNavController()
-        alarmTime = view.findViewById(R.id.alarm_time)
         alarmName = view.findViewById(R.id.alarm_name)
+        alarmTime = view.findViewById(R.id.alarm_time)
+        alarmEnabled = view.findViewById(R.id.alarm_enabled)
         sunday = view.findViewById(R.id.sunday)
         monday = view.findViewById(R.id.monday)
         tuesday = view.findViewById(R.id.tuesday)
@@ -66,6 +69,8 @@ class EditAlarmFragment : Fragment() {
 
         viewModel.alarm.observe(requireActivity(), {
             alarmTime.title = TimeFormatter.alarmTime(it.time)
+
+            alarmEnabled.isChecked = it.enabled
 
             alarmName.setText(it.name ?: "Untitled Alarm")
             alarmName.setTypeface(null, if (it.name == null) Typeface.ITALIC else Typeface.NORMAL)
@@ -118,6 +123,10 @@ class EditAlarmFragment : Fragment() {
             }
         }
         alarmName.setOnClickListener { alarmName.isCursorVisible = true }
+
+        alarmEnabled.setOnCheckedChangeListener { _, isChecked ->
+            saveAlarmHelper(viewModel.alarm.value?.copy(enabled = isChecked))
+        }
     }
 
     private fun saveAlarmHelper(newAlarm: Alarm?) {
