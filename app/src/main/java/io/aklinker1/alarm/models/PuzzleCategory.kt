@@ -2,26 +2,27 @@ package io.aklinker1.alarm.models
 
 import androidx.room.TypeConverter
 
-enum class PuzzleCategory {
-    Memory;
+enum class PuzzleCategory(val value: Int) {
+    Memory(0);
 
     companion object {
-        private const val MEMORY = 0
+        fun fromValue(value: Int?): PuzzleCategory? {
+            return when (value) {
+                0 -> Memory
+                else -> null
+            }
+        }
     }
+}
 
+class PuzzleCategoryConverter {
     @TypeConverter
     fun databaseToEnum(value: Int?): PuzzleCategory? {
-        return when(value) {
-            MEMORY -> Memory
-            else -> null
-        }
+        return PuzzleCategory.fromValue(value)
     }
 
     @TypeConverter
     fun enumToDatabase(value: PuzzleCategory?): Int? {
-        return when(value) {
-            Memory -> MEMORY
-            else -> null
-        }
+        return value?.value
     }
 }

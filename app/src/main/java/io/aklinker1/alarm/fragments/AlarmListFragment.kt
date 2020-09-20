@@ -15,17 +15,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import io.aklinker1.alarm.R
 import io.aklinker1.alarm.adapters.AlarmListAdapter
-import io.aklinker1.alarm.adapters.AlarmListItemClickListener
+import io.aklinker1.alarm.adapters.view_holders.AlarmListItemClickListener
 import io.aklinker1.alarm.models.Alarm
 import io.aklinker1.alarm.models.AlarmTime
 import io.aklinker1.alarm.models.hours
 import io.aklinker1.alarm.models.minutes
-import io.aklinker1.alarm.utils.DateUtils
 import io.aklinker1.alarm.view_models.AlarmListViewModel
 import io.aklinker1.alarm.workers.AlarmScheduler
 import kotlinx.android.synthetic.main.fragment_alarm_list.*
 import kotlinx.coroutines.launch
-import java.util.*
 
 class AlarmListFragment : Fragment(), AlarmListItemClickListener {
 

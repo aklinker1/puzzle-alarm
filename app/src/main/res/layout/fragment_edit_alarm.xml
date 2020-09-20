@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:fitsSystemWindows="true"
@@ -16,55 +15,55 @@
             android:layout_height="match_parent"
             android:layout_width="match_parent"
             app:contentScrim="@color/appBar"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-            app:expandedTitleTextAppearance="@style/AppTheme.ExpandedAlarmTitle">
+            app:expandedTitleTextAppearance="@style/AppTheme.ExpandedAlarmTitle"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/alarm_time"
                 android:layout_height="?attr/actionBarSize"
                 android:layout_width="match_parent"
-                app:layout_scrollFlags="scroll|enterAlways"
                 app:layout_collapseMode="pin"
-                tools:title="6:00 am"
-                tools:navigationIcon="@drawable/ac_back"/>
+                app:layout_scrollFlags="scroll|enterAlways"
+                tools:navigationIcon="@drawable/ac_back"
+                tools:title="6:00 am" />
 
             <FrameLayout
-                android:layout_width="match_parent"
                 android:layout_height="144dp"
+                android:layout_width="match_parent"
                 app:layout_collapseMode="parallax">
 
                 <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/alarm_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:gravity="center_vertical"
-                    android:layout_marginStart="?attr/actionBarSize"
-                    android:layout_marginLeft="?attr/actionBarSize"
-                    android:paddingStart="16dp"
-                    android:paddingLeft="16dp"
-                    android:paddingEnd="0dp"
-                    android:paddingRight="0dp"
-                    android:textStyle="italic"
-                    android:background="@android:color/transparent"
-                    android:inputType="text"
-                    android:imeOptions="actionDone"
-                    android:maxLines="1"
-                    android:cursorVisible="false"
                     style="@style/TextAppearance.AppCompat.Title"
+                    android:background="@android:color/transparent"
+                    android:cursorVisible="false"
+                    android:gravity="center_vertical"
+                    android:id="@+id/alarm_name"
+                    android:imeOptions="actionDone"
+                    android:inputType="text"
+                    android:layout_height="?attr/actionBarSize"
+                    android:layout_marginLeft="?attr/actionBarSize"
+                    android:layout_marginStart="?attr/actionBarSize"
+                    android:layout_width="match_parent"
+                    android:maxLines="1"
+                    android:paddingEnd="0dp"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="0dp"
+                    android:paddingStart="16dp"
                     android:textColor="@color/textColorSecondary"
-                    tools:text="Alarm Name"/>
+                    android:textStyle="italic"
+                    tools:text="Alarm Name" />
 
                 <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/alarm_enabled"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical|end"
-                    tools:checked="true"
-                    android:theme="@style/AppTheme.Reversed"
-                    android:layout_marginRight="8dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:layout_marginLeft="0dp"
-                    android:layout_marginStart="0dp"/>
+                    android:layout_marginRight="8dp"
+                    android:layout_marginStart="0dp"
+                    android:layout_width="wrap_content"
+                    android:theme="@style/AppTheme.Reversed"
+                    tools:checked="true" />
 
             </FrameLayout>
 
@@ -72,23 +71,15 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <androidx.recyclerview.widget.RecyclerView
         android:clipToPadding="false"
+        android:id="@+id/recycler_view"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:paddingBottom="?actionBarSize"
         android:paddingHorizontal="16dp"
-        android:paddingVertical="8dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <include layout="@layout/view_weekday_selector" />
-
-        </LinearLayout>
-
-    </androidx.core.widget.NestedScrollView>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:itemCount="3"
+        tools:listitem="@layout/list_item_puzzle"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

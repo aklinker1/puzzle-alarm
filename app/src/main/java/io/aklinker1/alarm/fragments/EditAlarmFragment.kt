@@ -2,13 +2,11 @@ package io.aklinker1.alarm.fragments
 
 import android.graphics.Typeface
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
-import android.widget.FrameLayout
 import androidx.appcompat.widget.SwitchCompat
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
@@ -18,52 +16,54 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import io.aklinker1.alarm.R
+import io.aklinker1.alarm.adapters.EditAlarmAdapter
+import io.aklinker1.alarm.adapters.view_holders.AddPuzzleListItemClickListener
+import io.aklinker1.alarm.adapters.view_holders.PuzzleListItemClickListener
+import io.aklinker1.alarm.adapters.view_holders.WeekdaySelectorListItemClickListener
+import io.aklinker1.alarm.fragments.edit_puzzles.EditPuzzleGridHighlightArgs
 import io.aklinker1.alarm.models.Alarm
-import io.aklinker1.alarm.utils.KeyboardUtils
+import io.aklinker1.alarm.models.Puzzle
 import io.aklinker1.alarm.utils.TimeFormatter
 import io.aklinker1.alarm.view_models.EditAlarmViewModel
+import io.aklinker1.alarm.workers.AlarmScheduler
 import kotlinx.coroutines.launch
 
-class EditAlarmFragment : Fragment() {
+class EditAlarmFragment : Fragment(), WeekdaySelectorListItemClickListener,
+    PuzzleListItemClickListener, AddPuzzleListItemClickListener {
 
     private val args: EditAlarmFragmentArgs by navArgs()
     private val viewModel by viewModels<EditAlarmViewModel> {
         EditAlarmViewModel.Factory(requireActivity().application, args.alarm)
     }
+    val puzzles = ArrayList<Puzzle>()
 
+    private lateinit var list: RecyclerView
     private lateinit var alarmName: EditText
     private lateinit var alarmTime: Toolbar
     private lateinit var alarmEnabled: SwitchCompat
-    private lateinit var sunday: FrameLayout
-    private lateinit var monday: FrameLayout
-    private lateinit var tuesday: FrameLayout
-    private lateinit var wednesday: FrameLayout
-    private lateinit var thursday: FrameLayout
-    private lateinit var friday: FrameLayout
-    private lateinit var saturday: FrameLayout
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.v("alarm", "Starting with ${args.alarm}")
         return inflater.inflate(R.layout.fragment_edit_alarm, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val navController = findNavController()
+        list = view.findViewById(R.id.recycler_view)
         alarmName = view.findViewById(R.id.alarm_name)
         alarmTime = view.findViewById(R.id.alarm_time)
         alarmEnabled = view.findViewById(R.id.alarm_enabled)
-        sunday = view.findViewById(R.id.sunday)
-        monday = view.findViewById(R.id.monday)
-        tuesday = view.findViewById(R.id.tuesday)
-        wednesday = view.findViewById(R.id.wednesday)
-        thursday = view.findViewById(R.id.thursday)
-        friday = view.findViewById(R.id.friday)
-        saturday = view.findViewById(R.id.saturday)
+        list = view.findViewById(R.id.recycler_view)
+
+        list.layoutManager = LinearLayoutManager(requireContext())
+        val adapter = EditAlarmAdapter(this, this, this)
+        list.adapter = adapter
 
         alarmTime.setupWithNavController(navController, AppBarConfiguration(navController.graph))
 
@@ -75,36 +75,11 @@ class EditAlarmFragment : Fragment() {
             alarmName.setText(it.name ?: "Untitled Alarm")
             alarmName.setTypeface(null, if (it.name == null) Typeface.ITALIC else Typeface.NORMAL)
 
-            sunday.isSelected = it.repeatSunday
-            monday.isSelected = it.repeatMonday
-            tuesday.isSelected = it.repeatTuesday
-            wednesday.isSelected = it.repeatWednesday
-            thursday.isSelected = it.repeatThursday
-            friday.isSelected = it.repeatFriday
-            saturday.isSelected = it.repeatSaturday
+            adapter.submitList(it, viewModel.puzzles.value)
         })
-
-        sunday.setOnClickListener {
-            saveAlarmHelper(viewModel.alarm.value?.copy(repeatSunday = !it.isSelected))
-        }
-        monday.setOnClickListener {
-            saveAlarmHelper(viewModel.alarm.value?.copy(repeatMonday = !it.isSelected))
-        }
-        tuesday.setOnClickListener {
-            saveAlarmHelper(viewModel.alarm.value?.copy(repeatTuesday = !it.isSelected))
-        }
-        wednesday.setOnClickListener {
-            saveAlarmHelper(viewModel.alarm.value?.copy(repeatWednesday = !it.isSelected))
-        }
-        thursday.setOnClickListener {
-            saveAlarmHelper(viewModel.alarm.value?.copy(repeatThursday = !it.isSelected))
-        }
-        friday.setOnClickListener {
-            saveAlarmHelper(viewModel.alarm.value?.copy(repeatFriday = !it.isSelected))
-        }
-        saturday.setOnClickListener {
-            saveAlarmHelper(viewModel.alarm.value?.copy(repeatSaturday = !it.isSelected))
-        }
+        viewModel.puzzles.observe(requireActivity(), {
+            adapter.submitList(viewModel.alarm.value, it)
+        })
 
         alarmName.setSelectAllOnFocus(true)
         alarmName.setOnEditorActionListener { input, actionId, _ ->
@@ -126,6 +101,7 @@ class EditAlarmFragment : Fragment() {
 
         alarmEnabled.setOnCheckedChangeListener { _, isChecked ->
             saveAlarmHelper(viewModel.alarm.value?.copy(enabled = isChecked))
+            AlarmScheduler.updateSchedule(requireContext())
         }
     }
 
@@ -141,4 +117,42 @@ class EditAlarmFragment : Fragment() {
             viewModel.updateAlarm(alarm)
         }
     }
+
+    override fun onClickDay(dayOfWeek: Int, repeated: Boolean) {
+        val newAlarm = viewModel.alarm.value?.copy()?.run {
+            when (dayOfWeek) {
+                0 -> this.repeatSunday = repeated
+                1 -> this.repeatMonday = repeated
+                2 -> this.repeatTuesday = repeated
+                3 -> this.repeatWednesday = repeated
+                4 -> this.repeatThursday = repeated
+                5 -> this.repeatFriday = repeated
+                6 -> this.repeatSaturday = repeated
+            }
+            this
+        }
+        saveAlarmHelper(newAlarm)
+    }
+
+    override fun onClickItem(puzzleId: Long) {
+        lifecycleScope.launch {
+            val puzzle = viewModel.getPuzzle(puzzleId)
+            val args = EditPuzzleGridHighlightArgs(puzzle)
+            findNavController().navigate(R.id.action_EditAlarm_to_EditPuzzle, args.toBundle())
+        }
+    }
+
+    override fun onClickDeleteItem(puzzleId: Long) {
+        lifecycleScope.launch {
+            val puzzle = viewModel.getPuzzle(puzzleId)
+            viewModel.deletePuzzle(puzzle)
+        }
+    }
+
+    override fun onClickAddPuzzle() {
+        lifecycleScope.launch {
+            viewModel.createPuzzle(Puzzle.MemoryGridHighlights(args.alarm.id))
+        }
+    }
+
 }

@@ -26,5 +26,5 @@ interface AlarmDao {
     suspend fun update(alarm: Alarm)
 
     @Delete
-    suspend fun delete(user: Alarm)
+    suspend fun delete(alarm: Alarm)
 }

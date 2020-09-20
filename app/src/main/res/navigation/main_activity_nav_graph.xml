@@ -25,13 +25,19 @@
             app:argType="io.aklinker1.alarm.models.Alarm"
             app:nullable="false" />
         <action
-            android:id="@+id/action_edit_alarm_to_edit_puzzle"
-            app:destination="@id/edit_puzzle" />
+            android:id="@+id/action_EditAlarm_to_EditPuzzle"
+            app:destination="@id/edit_grid_highlight_puzzle" />
     </fragment>
 
-    <fragment android:id="@+id/edit_puzzle">
+    <fragment android:id="@+id/edit_grid_highlight_puzzle"
+        android:name="io.aklinker1.alarm.fragments.edit_puzzles.EditPuzzleGridHighlight"
+        tools:layout="@layout/fragment_edit_puzzle_grid_highlight">
+        <argument
+            android:name="puzzle"
+            app:argType="io.aklinker1.alarm.models.Puzzle"
+            app:nullable="false" />
         <action
-            android:id="@+id/action_edit_puzzle_to_placeholder"
+            android:id="@+id/action_EditPuzzle_to_PlayPuzzle"
             app:destination="@id/play_puzzle" />
     </fragment>
 

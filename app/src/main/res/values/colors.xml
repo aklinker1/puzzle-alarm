@@ -2,10 +2,17 @@
 <resources>
     <color name="colorPrimary">#90CAF9</color>
     <color name="colorPrimaryDark">#1976D2</color>
+    <color name="colorPrimaryRipple">#3D90CAF9</color>
     <color name="colorAccent">#A5D6A7</color>
     <color name="colorAccentDark">#388E3C</color>
+    <color name="error">#EF9A9A</color>
     <color name="appBar">#303030</color>
     <color name="textColorSecondary">#99FFFFFF</color>
-    <color name="cardBackground">#2A2A2A</color>
+    <color name="cardBackground">#252525</color>
     <color name="divider">#1FFFFFFF</color>
+    <color name="background">#141414</color>
+    <color name="gridDeselected">#1FFFFFFF</color>
+    <color name="gridCorrect">@color/colorAccent</color>
+    <color name="gridWrong">@color/error</color>
+    <color name="gridPress">#3DFFFFFF</color>
 </resources>

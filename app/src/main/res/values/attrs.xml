@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="GridHighlightPuzzleView">
+        <attr name="size" format="integer" />
+        <attr name="highlightCount" format="integer" />
+    </declare-styleable>
+
+</resources>

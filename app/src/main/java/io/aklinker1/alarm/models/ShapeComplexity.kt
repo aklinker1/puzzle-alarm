@@ -2,38 +2,33 @@ package io.aklinker1.alarm.models
 
 import androidx.room.TypeConverter
 
-enum class ShapeComplexity {
-    Easy,
-    Medium,
-    Hard,
-    Impossible;
+enum class ShapeComplexity(val value: Int) {
+    Easy(0),
+    Medium(1),
+    Hard(2),
+    Impossible(3);
 
     companion object {
-        private const val EASY = 0
-        private const val MEDIUM = 1
-        private const val HARD = 2
-        private const val IMPOSSIBLE = 3
+        fun fromValue(value: Int?): ShapeComplexity? {
+            return when (value) {
+                0 -> Easy
+                1 -> Medium
+                2 -> Hard
+                3 -> Impossible
+                else -> null
+            }
+        }
     }
+}
 
+class ShapeComplexityConverter {
     @TypeConverter
     fun databaseToEnum(value: Int?): ShapeComplexity? {
-        return when(value) {
-            EASY -> Easy
-            MEDIUM -> Medium
-            HARD -> Hard
-            IMPOSSIBLE -> Impossible
-            else -> null
-        }
+        return ShapeComplexity.fromValue(value)
     }
 
     @TypeConverter
     fun enumToDatabase(value: ShapeComplexity?): Int? {
-        return when(value) {
-            Easy -> EASY
-            Medium -> MEDIUM
-            Hard -> HARD
-            Impossible -> IMPOSSIBLE
-            else -> null
-        }
+        return value?.value
     }
 }

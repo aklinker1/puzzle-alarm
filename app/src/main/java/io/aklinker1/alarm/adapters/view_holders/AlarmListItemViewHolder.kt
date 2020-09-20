@@ -6,12 +6,10 @@ import android.widget.TextView
 import androidx.appcompat.widget.SwitchCompat
 import androidx.recyclerview.widget.RecyclerView
 import io.aklinker1.alarm.R
-import io.aklinker1.alarm.adapters.AlarmListItemClickListener
-import io.aklinker1.alarm.models.Alarm
 import io.aklinker1.alarm.models.AlarmWithPuzzleCount
 import io.aklinker1.alarm.utils.TimeFormatter
 
-class AlarmViewHolder(private val clickHandler: AlarmListItemClickListener, view: View) :
+class AlarmListItemViewHolder(private val clickHandler: AlarmListItemClickListener, view: View) :
     RecyclerView.ViewHolder(view) {
     private val card: View = view.findViewById(R.id.card)
     private val border: View = view.findViewById(R.id.border)

@@ -7,12 +7,13 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import io.aklinker1.alarm.db.converters.DateConverter
 import io.aklinker1.alarm.db.daos.AlarmDao
+import io.aklinker1.alarm.db.daos.PuzzleDao
 import io.aklinker1.alarm.models.*
 import io.aklinker1.alarm.utils.SingletonHolder
 
 
 @Database(entities = [Alarm::class, Puzzle::class], version = 1)
-@TypeConverters(value = [DateConverter::class, AlarmTimeConverter::class, PuzzleType::class, PuzzleCategory::class, ShapeComplexity::class])
+@TypeConverters(value = [DateConverter::class, AlarmTimeConverter::class, PuzzleTypeConverter::class, PuzzleCategoryConverter::class, ShapeComplexityConverter::class])
 abstract class AppDatabase : RoomDatabase() {
 
     companion object : SingletonHolder<AppDatabase, Context>({
@@ -24,4 +25,6 @@ abstract class AppDatabase : RoomDatabase() {
     })
 
     abstract fun alarmDao(): AlarmDao
+    abstract fun puzzleDao(): PuzzleDao
+
 }

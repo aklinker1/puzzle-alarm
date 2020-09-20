@@ -1,6 +1,4 @@
-package io.aklinker1.alarm.adapters
-
-import io.aklinker1.alarm.models.Alarm
+package io.aklinker1.alarm.adapters.view_holders
 
 interface AlarmListItemClickListener {
     fun onClickAlarm(alarmId: Long)

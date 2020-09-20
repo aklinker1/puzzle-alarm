@@ -8,6 +8,8 @@ import androidx.lifecycle.ViewModelProvider
 import io.aklinker1.alarm.db.AppDatabase
 import io.aklinker1.alarm.db.repositories.AlarmRepository
 import io.aklinker1.alarm.models.Alarm
+import io.aklinker1.alarm.models.Puzzle
+import io.aklinker1.puzzle.db.repositories.PuzzleRepository
 
 class EditAlarmViewModel(application: Application, alarm: Alarm) : AndroidViewModel(application) {
 
@@ -20,11 +22,25 @@ class EditAlarmViewModel(application: Application, alarm: Alarm) : AndroidViewMo
 
     private val database = AppDatabase.getInstance(application)
     private val alarmRepository = AlarmRepository(database)
+    private val puzzleRepository = PuzzleRepository(database)
 
     val alarm = alarmRepository.getLive(alarm.id)
+    val puzzles = puzzleRepository.getForLive(alarm.id)
 
     suspend fun updateAlarm(alarm: Alarm) {
         alarmRepository.update(alarm)
+    }
+
+    suspend fun createPuzzle(puzzle: Puzzle) {
+        puzzleRepository.create(puzzle)
+    }
+
+    suspend fun getPuzzle(puzzleId: Long): Puzzle {
+        return puzzleRepository.get(puzzleId)
+    }
+
+    suspend fun deletePuzzle(puzzle: Puzzle) {
+        puzzleRepository.delete(puzzle)
     }
 
 }

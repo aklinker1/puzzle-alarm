@@ -3,6 +3,6 @@
 
     <item android:state_selected="true" android:color="@color/cardBackground" />
 
-    <item android:color="?colorSurface" />
+    <item android:color="@color/background" />
 
 </selector>

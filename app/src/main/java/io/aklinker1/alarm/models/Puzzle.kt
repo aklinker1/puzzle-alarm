@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.io.Serializable
+import java.util.*
 
 @Entity(tableName = "puzzles")
 data class Puzzle constructor(
@@ -18,7 +19,8 @@ data class Puzzle constructor(
     @ColumnInfo(name = "shape_pool_size") var shapePoolSize: Int? = null,
     @ColumnInfo(name = "shape_complexity") var shapeComplexity: ShapeComplexity? = null,
 
-    @ColumnInfo @PrimaryKey(autoGenerate = true) var id: Long = 0L
+    @ColumnInfo @PrimaryKey(autoGenerate = true) var id: Long = 0L,
+    @ColumnInfo(name = "created_at") var createdAt: Calendar = Calendar.getInstance()
 ) : Serializable {
     companion object {
         fun MemoryGridHighlights(alarmId: Long, gridSize: Int = 5, gridHighlightCount: Int = 5): Puzzle {
@@ -51,5 +53,25 @@ data class Puzzle constructor(
                 shapeComplexity = shapeComplexity
             )
         }
+    }
+
+    fun title(): String {
+        return when (type) {
+            PuzzleType.GridHighlights -> "Highlighted Squares"
+            PuzzleType.GridSequence -> "Grid Sequence"
+            PuzzleType.ShapeSequence -> "Shape Sequence"
+        }
+    }
+
+    fun subtitle(): String {
+        val categoryString = when (category) {
+            PuzzleCategory.Memory -> "Memory"
+        }
+        val infoString =  when (type) {
+            PuzzleType.GridHighlights -> "${gridSize}x$gridSize, $gridCount squares"
+            PuzzleType.GridSequence -> "${gridSize}x$gridSize, Count to $gridCount"
+            PuzzleType.ShapeSequence -> "Shape Sequence"
+        }
+        return "$infoString  •  $categoryString"
     }
 }
