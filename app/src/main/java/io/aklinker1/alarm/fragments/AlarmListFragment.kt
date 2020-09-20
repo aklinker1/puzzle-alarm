@@ -13,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import io.aklinker1.alarm.BuildConfig
 import io.aklinker1.alarm.R
 import io.aklinker1.alarm.adapters.AlarmListAdapter
 import io.aklinker1.alarm.adapters.view_holders.AlarmListItemClickListener
@@ -24,6 +25,7 @@ import io.aklinker1.alarm.view_models.AlarmListViewModel
 import io.aklinker1.alarm.workers.AlarmScheduler
 import kotlinx.android.synthetic.main.fragment_alarm_list.*
 import kotlinx.coroutines.launch
+import java.util.*
 
 class AlarmListFragment : Fragment(), AlarmListItemClickListener {
 
@@ -54,6 +56,9 @@ class AlarmListFragment : Fragment(), AlarmListItemClickListener {
         }
 
         fab.setOnClickListener(this.onClickFab)
+        if (BuildConfig.DEBUG) {
+            fab.setOnLongClickListener(this.onLongClickFab)
+        }
     }
 
     // List item handlers
@@ -116,5 +121,17 @@ class AlarmListFragment : Fragment(), AlarmListItemClickListener {
             Log.v("alarms", alarm.toString())
             AlarmScheduler.updateSchedule(requireContext())
         }
+    }
+
+    private val onLongClickFab = fun(_: View): Boolean {
+        val soon = Calendar.getInstance().apply {
+            add(Calendar.MINUTE, 1)
+        }
+        val alarm = Alarm(null, AlarmTime(soon[Calendar.HOUR_OF_DAY], soon[Calendar.MINUTE]), true)
+        lifecycleScope.launch {
+            alarmListViewModel.createAlarm(alarm)
+            AlarmScheduler.updateSchedule(requireContext())
+        }
+        return true
     }
 }

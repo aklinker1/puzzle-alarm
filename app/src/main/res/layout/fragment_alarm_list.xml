@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    tools:context=".activities.MainActivity">
+    tools:context=".activities.MainActivity"
+>
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:theme="@style/AppTheme.AppBarOverlay"
-        app:elevation="0dp">
+        app:elevation="0dp"
+    >
 
         <androidx.appcompat.widget.Toolbar
             android:background="?colorSurface"
@@ -18,7 +21,8 @@
             android:layout_height="?attr/actionBarSize"
             android:layout_width="match_parent"
             app:popupTheme="@style/AppTheme.PopupOverlay"
-            app:title="@string/app_name" />
+            app:title="@string/app_name"
+        />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -31,7 +35,8 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:context=".fragments.AlarmListFragment"
         tools:itemCount="3"
-        tools:listitem="@layout/list_item_alarm" />
+        tools:listitem="@layout/list_item_alarm"
+    />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
@@ -41,6 +46,7 @@
         android:layout_width="wrap_content"
         android:theme="@style/AppTheme.Reversed"
         app:backgroundTint="?colorPrimary"
-        app:srcCompat="@drawable/ic_add" />
+        app:srcCompat="@drawable/ic_add"
+    />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

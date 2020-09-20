@@ -1,21 +1,25 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8" ?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+>
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_height="wrap_content"
-        android:layout_width="match_parent">
+        android:layout_width="match_parent"
+    >
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_height="?actionBarSize"
             android:layout_width="match_parent"
             app:title="Edit Grid Highlight"
-            tools:navigationIcon="@drawable/ac_back" />
+            tools:navigationIcon="@drawable/ac_back"
+        />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -24,12 +28,14 @@
         android:layout_width="match_parent"
         android:padding="16dp"
         android:clipToPadding="false"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    >
 
         <LinearLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+        >
 
             <TextView
                 style="@style/TextAppearance.MaterialComponents.Subtitle2"
@@ -38,27 +44,31 @@
                 android:layout_width="match_parent"
                 android:text="Category"
                 android:textAllCaps="true"
-                android:textColor="@color/textColorSecondary" />
+                android:textColor="@color/textColorSecondary"
+            />
 
             <LinearLayout
                 android:gravity="center_vertical"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="8dp"
                 android:layout_width="match_parent"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+            >
 
                 <ImageView
                     android:layout_height="wrap_content"
                     android:layout_marginRight="16dp"
                     android:layout_width="wrap_content"
-                    app:srcCompat="@drawable/category_memory" />
+                    app:srcCompat="@drawable/category_memory"
+                />
 
                 <TextView
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
                     android:text="Memory"
                     android:textColor="?colorOnSurface"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                />
 
             </LinearLayout>
 
@@ -70,7 +80,8 @@
                 android:layout_width="match_parent"
                 android:text="Preview"
                 android:textAllCaps="true"
-                android:textColor="@color/textColorSecondary" />
+                android:textColor="@color/textColorSecondary"
+            />
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_height="wrap_content"
@@ -78,19 +89,22 @@
                 android:layout_width="match_parent"
                 app:cardBackgroundColor="@color/cardBackground"
                 app:contentPadding="16dp"
-                app:contentPaddingBottom="4dp">
+                app:contentPaddingBottom="4dp"
+            >
 
                 <LinearLayout
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                >
 
                     <io.aklinker1.alarm.views.GridHighlightPuzzleView
                         android:id="@+id/grid"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:visibility="invisible"
-                        tools:visibility="visible"/>
+                        tools:visibility="visible"
+                    />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/reset"
@@ -101,7 +115,8 @@
                         android:layout_width="wrap_content"
                         android:layout_marginTop="8dp"
                         android:paddingRight="16dp"
-                        android:text="Reset" />
+                        android:text="Reset"
+                    />
 
                 </LinearLayout>
 
@@ -115,14 +130,16 @@
                 android:layout_width="match_parent"
                 android:text="Description"
                 android:textAllCaps="true"
-                android:textColor="@color/textColorSecondary" />
+                android:textColor="@color/textColorSecondary"
+            />
 
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:paddingHorizontal="8dp"
                 android:text="Memorize the squares on a grid that are highlighted. After a view seconds they disappear and you have to click on each of the squares that were highlighted!"
-                android:textColor="?colorOnSurface" />
+                android:textColor="?colorOnSurface"
+            />
 
             <TextView
                 style="@style/TextAppearance.MaterialComponents.Subtitle2"
@@ -132,7 +149,8 @@
                 android:layout_width="match_parent"
                 android:text="Settings"
                 android:textAllCaps="true"
-                android:textColor="@color/textColorSecondary" />
+                android:textColor="@color/textColorSecondary"
+            />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_height="50dp"
@@ -140,7 +158,8 @@
                 android:paddingBottom="8dp"
                 android:clipToPadding="false"
                 android:layout_width="match_parent"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+            >
 
                 <TextView
                     android:gravity="center_vertical"
@@ -151,7 +170,8 @@
                     android:text="Grid Size"
                     android:textColor="?colorOnSurface"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                />
 
                 <TextView
                     android:id="@+id/grid_size"
@@ -164,7 +184,8 @@
                     android:textSize="16sp"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:text="5" />
+                    tools:text="5"
+                />
 
                 <SeekBar
                     android:id="@+id/grid_size_slider"
@@ -179,7 +200,8 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/grid_size_label"
-                    tools:progress="2" />
+                    tools:progress="2"
+                />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -189,7 +211,8 @@
                 android:paddingBottom="8dp"
                 android:clipToPadding="false"
                 android:layout_width="match_parent"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+            >
 
                 <TextView
                     android:gravity="center_vertical"
@@ -200,7 +223,8 @@
                     android:text="Number of Highlights"
                     android:textColor="?colorOnSurface"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                />
 
                 <TextView
                     android:id="@+id/highlight_count"
@@ -213,7 +237,8 @@
                     android:textSize="16sp"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:text="8" />
+                    tools:text="8"
+                />
 
                 <SeekBar
                     android:id="@+id/highlight_count_slider"
@@ -228,7 +253,8 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/highlight_count_label"
-                    tools:progress="8" />
+                    tools:progress="8"
+                />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

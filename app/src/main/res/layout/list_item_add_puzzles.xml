@@ -1,7 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8" ?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="wrap_content"
-    android:layout_width="match_parent">
+    android:layout_width="match_parent"
+>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/add_puzzle"
@@ -9,6 +11,7 @@
         android:layout_gravity="center"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:text="Add Puzzle" />
+        android:text="Add Puzzle"
+    />
 
 </FrameLayout>

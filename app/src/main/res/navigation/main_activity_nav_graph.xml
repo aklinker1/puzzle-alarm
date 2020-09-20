@@ -1,44 +1,52 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_activity_nav_graph"
-    app:startDestination="@id/alarm_list">
+    app:startDestination="@id/alarm_list"
+>
 
     <fragment
         android:id="@+id/alarm_list"
         android:name="io.aklinker1.alarm.fragments.AlarmListFragment"
-        tools:layout="@layout/fragment_alarm_list">
+        tools:layout="@layout/fragment_alarm_list"
+    >
 
-        <action
-            android:id="@+id/action_AlarmList_to_EditAlarm"
-            app:destination="@id/edit_alarm" />
+        <action android:id="@+id/action_AlarmList_to_EditAlarm" app:destination="@id/edit_alarm" />
 
     </fragment>
 
     <fragment
         android:id="@+id/edit_alarm"
         android:name="io.aklinker1.alarm.fragments.EditAlarmFragment"
-        tools:layout="@layout/fragment_edit_alarm">
+        tools:layout="@layout/fragment_edit_alarm"
+    >
         <argument
             android:name="alarm"
             app:argType="io.aklinker1.alarm.models.Alarm"
-            app:nullable="false" />
+            app:nullable="false"
+        />
         <action
             android:id="@+id/action_EditAlarm_to_EditPuzzle"
-            app:destination="@id/edit_grid_highlight_puzzle" />
+            app:destination="@id/edit_grid_highlight_puzzle"
+        />
     </fragment>
 
-    <fragment android:id="@+id/edit_grid_highlight_puzzle"
+    <fragment
+        android:id="@+id/edit_grid_highlight_puzzle"
         android:name="io.aklinker1.alarm.fragments.edit_puzzles.EditPuzzleGridHighlight"
-        tools:layout="@layout/fragment_edit_puzzle_grid_highlight">
+        tools:layout="@layout/fragment_edit_puzzle_grid_highlight"
+    >
         <argument
             android:name="puzzle"
             app:argType="io.aklinker1.alarm.models.Puzzle"
-            app:nullable="false" />
+            app:nullable="false"
+        />
         <action
             android:id="@+id/action_EditPuzzle_to_PlayPuzzle"
-            app:destination="@id/play_puzzle" />
+            app:destination="@id/play_puzzle"
+        />
     </fragment>
 
     <fragment android:id="@+id/play_puzzle" />

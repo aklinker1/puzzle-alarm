@@ -1,5 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8" ?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:gravity="center_horizontal"
     android:layout_height="wrap_content"
@@ -7,17 +8,17 @@
     android:paddingTop="8dp"
     android:paddingBottom="16dp"
     android:orientation="horizontal"
-    tools:ignore="HardcodedText">
+    tools:ignore="HardcodedText"
+>
 
     <FrameLayout
         style="@style/AppTheme.WeekdayItem"
         android:background="?selectableItemBackgroundBorderless"
         android:id="@+id/sunday"
-        android:layout_marginHorizontal="8dp">
+        android:layout_marginHorizontal="8dp"
+    >
 
-        <TextView
-            style="@style/AppTheme.WeekdayItem.Text"
-            android:text="S" />
+        <TextView style="@style/AppTheme.WeekdayItem.Text" android:text="S" />
 
     </FrameLayout>
 
@@ -25,11 +26,10 @@
         style="@style/AppTheme.WeekdayItem"
         android:background="?selectableItemBackgroundBorderless"
         android:id="@+id/monday"
-        android:layout_marginHorizontal="8dp">
+        android:layout_marginHorizontal="8dp"
+    >
 
-        <TextView
-            style="@style/AppTheme.WeekdayItem.Text"
-            android:text="M" />
+        <TextView style="@style/AppTheme.WeekdayItem.Text" android:text="M" />
 
     </FrameLayout>
 
@@ -37,11 +37,10 @@
         style="@style/AppTheme.WeekdayItem"
         android:background="?selectableItemBackgroundBorderless"
         android:id="@+id/tuesday"
-        android:layout_marginHorizontal="8dp">
+        android:layout_marginHorizontal="8dp"
+    >
 
-        <TextView
-            style="@style/AppTheme.WeekdayItem.Text"
-            android:text="T" />
+        <TextView style="@style/AppTheme.WeekdayItem.Text" android:text="T" />
 
     </FrameLayout>
 
@@ -49,11 +48,10 @@
         style="@style/AppTheme.WeekdayItem"
         android:background="?selectableItemBackgroundBorderless"
         android:id="@+id/wednesday"
-        android:layout_marginHorizontal="8dp">
+        android:layout_marginHorizontal="8dp"
+    >
 
-        <TextView
-            style="@style/AppTheme.WeekdayItem.Text"
-            android:text="W" />
+        <TextView style="@style/AppTheme.WeekdayItem.Text" android:text="W" />
 
     </FrameLayout>
 
@@ -61,11 +59,10 @@
         style="@style/AppTheme.WeekdayItem"
         android:background="?selectableItemBackgroundBorderless"
         android:id="@+id/thursday"
-        android:layout_marginHorizontal="8dp">
+        android:layout_marginHorizontal="8dp"
+    >
 
-        <TextView
-            style="@style/AppTheme.WeekdayItem.Text"
-            android:text="T" />
+        <TextView style="@style/AppTheme.WeekdayItem.Text" android:text="T" />
 
     </FrameLayout>
 
@@ -73,11 +70,10 @@
         style="@style/AppTheme.WeekdayItem"
         android:background="?selectableItemBackgroundBorderless"
         android:id="@+id/friday"
-        android:layout_marginHorizontal="8dp">
+        android:layout_marginHorizontal="8dp"
+    >
 
-        <TextView
-            style="@style/AppTheme.WeekdayItem.Text"
-            android:text="F" />
+        <TextView style="@style/AppTheme.WeekdayItem.Text" android:text="F" />
 
     </FrameLayout>
 
@@ -85,11 +81,10 @@
         style="@style/AppTheme.WeekdayItem"
         android:background="?selectableItemBackgroundBorderless"
         android:id="@+id/saturday"
-        android:layout_marginHorizontal="8dp">
+        android:layout_marginHorizontal="8dp"
+    >
 
-        <TextView
-            style="@style/AppTheme.WeekdayItem.Text"
-            android:text="S" />
+        <TextView style="@style/AppTheme.WeekdayItem.Text" android:text="S" />
 
     </FrameLayout>
 
